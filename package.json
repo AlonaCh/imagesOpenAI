@@ -4,12 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "start:frontend": "vite",
+    "start:backend": "nodemon server.js",
+    "build:frontend": "vite build",
+    "serve:frontend": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.4",
+    "openai": "^4.52.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "web-vitals": "^4.2.1"
