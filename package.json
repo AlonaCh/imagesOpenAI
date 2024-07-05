@@ -8,7 +8,8 @@
     "start:backend": "nodemon server.js",
     "build:frontend": "vite build",
     "serve:frontend": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "start": "npm run start:backend"
   },
   "dependencies": {
     "nodemon": "^3.1.2",
