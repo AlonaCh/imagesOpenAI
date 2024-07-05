@@ -20,25 +20,28 @@ dotenv.config();
 //to store the image
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public')//folder name
+        cb(null, 'public'); // Destination folder
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname)
+        cb(null, Date.now() + '-' + file.originalname); // File naming
     }
-})
+});
 
-const upload = multer({ storage: storage }).single("file")
+const upload = multer({ storage }).single('file');
 
-let filePath
 
-app.post("/upload", (req, res) => {
+// Serve the uploaded image
+
+app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
         if (err) {
-            return res.status(500).json(err)
+            return res.status(500).json(err);
         }
-        filePath = req.file.path
-        //res.status(200).json({ filePath });
-    })
-})
+        // File path is stored in `req.file.path`
+        const filePath = req.file.path;
+        res.status(200).json({ filePath });
+    });
+});
+
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
