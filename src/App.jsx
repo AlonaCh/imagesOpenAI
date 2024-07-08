@@ -40,6 +40,16 @@ setValue(randomValue);
     }
   };
 
+  const analyzeImage = async () => {
+
+  }
+
+  const clear = () => {
+    setImage(null);
+    setValue('');
+    setResponse('');
+  }
+
   return (
     <div className='app'>
     <section className='search-section'>
