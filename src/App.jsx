@@ -4,6 +4,19 @@ import { useState } from 'react';
 function App() {
   const [image, setImage] = useState(null);
   const [value, setValue] = useState('');
+  const [response, setResponse] = useState('');
+  const [error, setError] = useState('');
+
+const surpriseOptions = [
+  'What is the main object in the image?',
+  'What is the color of the object in the image?',
+  'What is the size of the object in the image?',
+]
+
+  const surprise = () => {
+const randomValue = surpriseOptions[Math.floor(Math.random() * surpriseOptions.length)];//randomly select an option
+setValue(randomValue);
+}
 
   const uploadImage = async (e) => {
     const formData = new FormData();
@@ -41,14 +54,18 @@ function App() {
       </p>
       <p>
         What do you want to ask about the image?
-        <button className='surpriseBtn'>Surprise me</button>
+        <button className='surpriseBtn' onClick={surprise} disabled={response}>Surprise me</button>
       </p>
       <div className='input'>
         <input
         value={value}
         placeholder='What is in the image'
         onChange={e => setValue(e.target.value)}/>
+        {(!response && !error) && <button onClick={analyzeImage}>Ask me</button>}
+        {(response || error) && <button onClick={clear}>Clear</button>}
       </div>
+      {error && <p>{error}</p>}
+      {response && <p>{response}</p>}
     </section>
   
      
