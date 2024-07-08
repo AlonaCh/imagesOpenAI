@@ -3,10 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import multer from 'multer';
+import OpenAI from 'openai';
 
 
 const PORT = 8080
 
+const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 const app = express()
 app.use(cors())
@@ -43,5 +45,8 @@ app.post('/upload', (req, res) => {
     });
 });
 
+app.post('/openai', (req, res) => {
+   const prompt = req.body.message;
+    })
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))

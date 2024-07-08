@@ -41,6 +41,26 @@ setValue(randomValue);
   };
 
   const analyzeImage = async () => {
+    if (!image){
+      setError('Please upload an image');
+      return
+    }
+    try {
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({ message: value }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const response = await fetch('http://localhost:8080/openai', options);
+      }
+
+     catch (err) {
+      console.log(err);
+       setError('Something went wrong. Please try again later.');
+    
+    }
 
   }
 
