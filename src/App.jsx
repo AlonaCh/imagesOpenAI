@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 function App() {
   const [image, setImage] = useState(null);
+  const [value, setValue] = useState('');
 
   const uploadImage = async (e) => {
     const formData = new FormData();
@@ -28,9 +29,29 @@ function App() {
 
   return (
     <div className='app'>
-      {image && <img src={URL.createObjectURL(image)} alt="Uploaded" />}
-      <lable htmlFor='files'>Upload an image</lable>
+    <section className='search-section'>
+      <div className='img-container'>
+    {image && <img src={URL.createObjectURL(image)} alt="Uploaded" />}
+      </div>
+      <p className='information'>
+        <span>
+          <lable htmlFor='files'>Upload an image</lable>
       <input onChange={uploadImage} id='files' accept='image/*' type='file' />
+        </span>
+      </p>
+      <p>
+        What do you want to ask about the image?
+        <button className='surpriseBtn'>Surprise me</button>
+      </p>
+      <div className='input'>
+        <input
+        value={value}
+        placeholder='What is in the image'
+        onChange={e => setValue(e.target.value)}/>
+      </div>
+    </section>
+  
+     
 
     </div>
   );
