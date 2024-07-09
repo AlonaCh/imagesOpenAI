@@ -1,9 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import multer from 'multer';
 import OpenAI from 'openai';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 
 const PORT = 8080
@@ -13,8 +16,6 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 const app = express()
 app.use(cors())
 app.use(express.json())
-// Load environment variables from .env file
-dotenv.config();
 
 //to help with file system, send img from the frontend and store in backend
 // const multer = require('multer')
