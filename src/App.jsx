@@ -34,7 +34,8 @@ setValue(randomValue);
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log(data);
+  
+      console.log(data)
     } catch (err) {
       console.log(err);
     }
@@ -54,6 +55,8 @@ setValue(randomValue);
         },
       }
       const response = await fetch('http://localhost:8080/openai', options);
+      const text = await response.json()
+      setResponse(text);
       }
 
      catch (err) {
@@ -92,7 +95,7 @@ setValue(randomValue);
         placeholder='What is in the image'
         onChange={e => setValue(e.target.value)}/>
         {(!response && !error) && <button onClick={analyzeImage}>Ask me</button>}
-        {(response || error) && <button onClick={clear}>Clear</button>}
+          {(response || error) && <button onClick={clear}>Clear</button>}
       </div>
       {error && <p>{error}</p>}
       {response && <p>{response}</p>}

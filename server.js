@@ -32,16 +32,37 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).single('file');
 
+// app.post('/upload', (req, res) => {
+    
+//     upload(req, res, (err) => {
+//         if (err) {
+//             return res.status(500).json(err);
+//         }
+//          let filePath;
+
+//          // Assuming upload middleware sets req.file.path
+//          if(req.file && req.file.path){
+//        filePath = req.file.path
+   
+//          } else {
+//             return res.status(400).json({ message: 'Please upload a file' });
+//          }
+//           // Now filePath is defined and can be used in subsequent code
+//               res.status(200).json({ filePath });
+//     });
+// });
 
 // Serve the uploaded image
 
 app.post('/upload', (req, res) => {
+     const filePath = req.file.path;
     upload(req, res, (err) => {
         if (err) {
             return res.status(500).json(err);
         }
+    
         // File path is stored in `req.file.path`
-        const filePath = req.file.path;
+       
         res.status(200).json({ filePath });
     });
 });
@@ -67,7 +88,8 @@ messages: [
 ]
    }
    )
-    console.log(response)
+    console.log(response.choices[0].message.content)
+    res.send(response.choices[0].message.content)
     } catch (err) {
         console.error(err);
     }
