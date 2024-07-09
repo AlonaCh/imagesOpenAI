@@ -78,7 +78,7 @@ setValue(randomValue);
       </div>
       <p className='information'>
         <span>
-          <lable htmlFor='files'>Upload an image</lable>
+          <label htmlFor='files'>Upload an image</label>
       <input onChange={uploadImage} id='files' accept='image/*' type='file' />
         </span>
       </p>

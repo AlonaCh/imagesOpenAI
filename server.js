@@ -45,8 +45,32 @@ app.post('/upload', (req, res) => {
     });
 });
 
-app.post('/openai', (req, res) => {
-   const prompt = req.body.message;
+
+app.post('/openai', async (req, res) => {
+    try {
+ const prompt = req.body.message;
+
+   const imageAsBase64 = fs.readFileSync(filePath, "base64")
+   const response = await openai.chat.completions.create({
+model: "gpt-4o",
+messages: [
+    {
+        role: "user",
+        content: [
+            {type: "text", text: prompt},
+            {type: "image_url", image_url:{
+                url: `data:image/jpeg;base64,${imageAsBase64}`
+            }}
+        ]
+    }
+]
+   }
+   )
+    console.log(response)
+    } catch (err) {
+        console.error(err);
+    }
     })
+   
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
