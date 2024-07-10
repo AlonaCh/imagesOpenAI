@@ -55,14 +55,14 @@ const upload = multer({ storage }).single('file');
 // Serve the uploaded image
 
 app.post('/upload', (req, res) => {
-     const filePath = req.file.path;
+     
     upload(req, res, (err) => {
         if (err) {
             return res.status(500).json(err);
         }
     
         // File path is stored in `req.file.path`
-       
+       const filePath = req.file.path;
         res.status(200).json({ filePath });
     });
 });

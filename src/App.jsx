@@ -55,7 +55,7 @@ setValue(randomValue);
         },
       }
       const response = await fetch('http://localhost:8080/openai', options);
-      const text = await response.json()
+      const text = await response.text()
       setResponse(text);
       }
 
@@ -87,7 +87,7 @@ setValue(randomValue);
       </p>
       <p>
         What do you want to ask about the image?
-        <button className='surpriseBtn' onClick={surprise} disabled={response}>Surprise me</button>
+        <button className='surpriseBtn' onClick={() => {}} disabled={response}>Surprise me</button>
       </p>
       <div className='input'>
         <input
@@ -97,8 +97,10 @@ setValue(randomValue);
         {(!response && !error) && <button onClick={analyzeImage}>Ask me</button>}
           {(response || error) && <button onClick={clear}>Clear</button>}
       </div>
+      <div className='answer'>
       {error && <p>{error}</p>}
       {response && <p>{response}</p>}
+      </div>
     </section>
   
      
