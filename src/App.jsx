@@ -18,7 +18,29 @@ const randomValue = surpriseOptions[Math.floor(Math.random() * surpriseOptions.l
 setValue(randomValue);
 }
 
-  const uploadImage = async (e) => {
+  // const uploadImage = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append('file', e.target.files[0]);
+  //   setImage(e.target.files[0]);
+  //   e.target.value = null;
+
+  //   try {
+  //     const options = {
+  //       method: 'POST',
+  //       body: formData,
+  //     };
+  //     const response = await fetch('http://localhost:8080/upload', options);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     const data = await response.json();
+  
+  //     console.log(data)
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+const uploadImage = async (e) => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     setImage(e.target.files[0]);
@@ -34,17 +56,38 @@ setValue(randomValue);
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-  
-      console.log(data)
+      console.log(data);
     } catch (err) {
       console.log(err);
+      setError('Failed to upload image.');
     }
   };
+  // const analyzeImage = async () => {
+  //   if (!image){
+  //     setError('Please upload an image');
+  //     return
+  //   }
+  //   try {
+  //     const options = {
+  //       method: 'POST',
+  //       body: JSON.stringify({ message: value }),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     }
+  //     const response = await fetch('http://localhost:8080/openai', options);
+  //     const text = await response.text()
+  //     setResponse(text);
+  //     }
 
-  const analyzeImage = async () => {
-    if (!image){
+  //    catch (err) {
+  //     console.log(err);
+  //      setError('Something went wrong. Please try again later.');
+  //   }}
+const analyzeImage = async () => {
+    if (!image) {
       setError('Please upload an image');
-      return
+      return;
     }
     try {
       const options = {
@@ -53,19 +96,18 @@ setValue(randomValue);
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      };
       const response = await fetch('http://localhost:8080/openai', options);
-      const text = await response.text()
-      setResponse(text);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-
-     catch (err) {
+      const text = await response.text();
+      setResponse(text);
+    } catch (err) {
       console.log(err);
-       setError('Something went wrong. Please try again later.');
-    
+      setError('Something went wrong. Please try again later.');
     }
-
-  }
+  };
 
   const clear = () => {
     setImage(null);
@@ -87,14 +129,17 @@ setValue(randomValue);
       </p>
       <p>
         What do you want to ask about the image?
-        <button className='surpriseBtn' onClick={() => {}} disabled={response}>Surprise me</button>
+        <button className='surpriseBtn' onClick={surprise} disabled={!!response}>Surprise me</button>
       </p>
       <div className='input'>
         <input
         value={value}
         placeholder='What is in the image'
         onChange={e => setValue(e.target.value)}/>
-        {(!response && !error) && <button onClick={analyzeImage}>Ask me</button>}
+        {/* {(!response && !error) && <button onClick={analyzeImage}>Ask me</button>}
+          {(response || error) && <button onClick={clear}>Clear</button>} */}
+
+           <button onClick={analyzeImage} disabled={!!response || !!error}>Ask me</button>
           {(response || error) && <button onClick={clear}>Clear</button>}
       </div>
       <div className='answer'>

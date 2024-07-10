@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage }).single('file');
+const upload = multer({ storage: storage }).single('file');
 
 // app.post('/upload', (req, res) => {
     
@@ -51,7 +51,7 @@ const upload = multer({ storage }).single('file');
 //               res.status(200).json({ filePath });
 //     });
 // });
-
+let filePath
 // Serve the uploaded image
 
 app.post('/upload', (req, res) => {
@@ -62,7 +62,7 @@ app.post('/upload', (req, res) => {
         }
     
         // File path is stored in `req.file.path`
-       const filePath = req.file.path;
+        filePath = req.file.path;
         res.status(200).json({ filePath });
     });
 });
@@ -73,21 +73,18 @@ app.post('/openai', async (req, res) => {
  const prompt = req.body.message;
 
    const imageAsBase64 = fs.readFileSync(filePath, "base64")
-   const response = await openai.chat.completions.create({
-model: "gpt-4o",
-messages: [
-    {
-        role: "user",
-        content: [
-            {type: "text", text: prompt},
-            {type: "image_url", image_url:{
-                url: `data:image/jpeg;base64,${imageAsBase64}`
-            }}
-        ]
-    }
-]
-   }
-   )
+  const response = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: prompt },
+            { type: "image_url", image_url: { url: `data:image/jpeg;base64,${imageAsBase64}` } }
+          ]
+        }
+      ]
+    });
     console.log(response.choices[0].message.content)
     res.send(response.choices[0].message.content)
     } catch (err) {
